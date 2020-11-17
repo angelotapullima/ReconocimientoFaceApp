@@ -1,7 +1,3 @@
-
-
-
-
 import 'package:face_reconocimiento_app/pages/db/database.dart';
 import 'package:face_reconocimiento_app/pages/profile.dart';
 import 'package:face_reconocimiento_app/services/facenet_service.dart';
@@ -21,7 +17,8 @@ class User {
 }
 
 class AuthActionButton extends StatefulWidget {
-  AuthActionButton(this._initializeControllerFuture, {@required this.onPressed, @required this.isLogin});
+  AuthActionButton(this._initializeControllerFuture,
+      {@required this.onPressed, @required this.isLogin});
   final Future _initializeControllerFuture;
   final Function onPressed;
   final bool isLogin;
@@ -34,13 +31,14 @@ class _AuthActionButtonState extends State<AuthActionButton> {
   final FaceNetService _faceNetService = FaceNetService();
   final DataBaseService _dataBaseService = DataBaseService();
 
-  final TextEditingController _userTextEditingController = TextEditingController(text: '');
-  final TextEditingController _passwordTextEditingController = TextEditingController(text: '');
+  final TextEditingController _userTextEditingController =
+      TextEditingController(text: '');
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController(text: '');
 
   User predictedUser;
 
   Future _signUp(context) async {
-
     /// gets predicted data from facenet service (user face detected)
     List predictedData = _faceNetService.predictedData;
     String user = _userTextEditingController.text;
@@ -51,7 +49,8 @@ class _AuthActionButtonState extends State<AuthActionButton> {
 
     /// resets the face stored in the face net sevice
     this._faceNetService.setPredictedData(null);
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
   }
 
   Future _signIn(context) async {
@@ -65,13 +64,13 @@ class _AuthActionButtonState extends State<AuthActionButton> {
                     username: this.predictedUser.user,
                   )));
     } else {
-      print(" WRONG PASSWORD!");
+      print(" Contraseña inválida!");
     }
   }
 
   String _predictUser() {
     String userAndPass = _faceNetService.predict();
-    return userAndPass?? null;
+    return userAndPass ?? null;
   }
 
   @override
@@ -94,7 +93,8 @@ class _AuthActionButtonState extends State<AuthActionButton> {
                 this.predictedUser = User.fromDB(userAndPass);
               }
             }
-            Scaffold.of(context).showBottomSheet((context) => signSheet(context));
+            Scaffold.of(context)
+                .showBottomSheet((context) => signSheet(context));
           }
         } catch (e) {
           // If an error occurs, log the error to the console.
@@ -114,28 +114,28 @@ class _AuthActionButtonState extends State<AuthActionButton> {
           widget.isLogin && predictedUser != null
               ? Container(
                   child: Text(
-                    'Welcome back, ' + predictedUser.user + '! 😄',
+                    'Bienvenido, ' + predictedUser.user + '! 😄',
                     style: TextStyle(fontSize: 20),
                   ),
                 )
               : widget.isLogin
                   ? Container(
                       child: Text(
-                      'User not found 😞',
+                      'usuario no encontrado 😞',
                       style: TextStyle(fontSize: 20),
                     ))
                   : Container(),
           !widget.isLogin
               ? TextField(
                   controller: _userTextEditingController,
-                  decoration: InputDecoration(labelText: "Your Name"),
+                  decoration: InputDecoration(labelText: "Su nombre"),
                 )
               : Container(),
           widget.isLogin && predictedUser == null
               ? Container()
               : TextField(
                   controller: _passwordTextEditingController,
-                  decoration: InputDecoration(labelText: "Password"),
+                  decoration: InputDecoration(labelText: "Contraseña"),
                   obscureText: true,
                 ),
           widget.isLogin && predictedUser != null

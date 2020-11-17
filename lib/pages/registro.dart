@@ -81,7 +81,7 @@ class SignUpState extends State<SignUp> {
       showDialog(
           context: context,
           child: AlertDialog(
-            content: Text('No face detected!'),
+            content: Text('No se detecto ningun rostro!'),
           ));
 
       return false;

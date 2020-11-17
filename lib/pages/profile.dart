@@ -14,13 +14,13 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome back, ' + username + '!'),
+        title: Text('Bienvenido, ' + username + '!'),
         leading: Container(),
       ),
       body: Container(
         child: Column(
           children: [
-            Text('This is your super amazing profile'),
+            Text('Este es su perfil'),
             RaisedButton(
               child: Text('Logout'),
               onPressed: () {
